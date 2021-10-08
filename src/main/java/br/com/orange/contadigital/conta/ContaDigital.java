@@ -1,9 +1,11 @@
 package br.com.orange.contadigital.conta;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import br.com.orange.contadigital.conta.cliente.Cliente;
+import br.com.orange.contadigital.exception.ObjetoErroDTO;
+import br.com.orange.contadigital.exception.RegraNegocioException;
+
+import javax.persistence.*;
+import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 
 @Entity
@@ -15,21 +17,30 @@ public class ContaDigital {
 
     private String numero;
 
-    private Long idCliente;
+    @OneToOne
+    private Cliente cliente;
 
+    @PositiveOrZero
     private BigDecimal saldo;
 
     @Deprecated
     public ContaDigital() {
     }
 
-    public ContaDigital(String numero, Long idCliente, BigDecimal saldo) {
+    public ContaDigital(String numero, Cliente cliente, BigDecimal saldo) {
         this.numero = numero;
-        this.idCliente = idCliente;
+        this.cliente = cliente;
         this.saldo = saldo;
     }
 
-    public void creditar(BigDecimal valor) {
+    public void deposito(BigDecimal valor) {
         this.saldo.add(valor);
+    }
+
+    public void saque(BigDecimal valor) {
+        if (this.saldo.compareTo(valor) == -1){
+            throw new RegraNegocioException(new ObjetoErroDTO("valor", "Saldo insuficiente."));
+        }
+        this.saldo.subtract(valor);
     }
 }

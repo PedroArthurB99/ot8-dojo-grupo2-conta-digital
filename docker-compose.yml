@@ -1,0 +1,11 @@
+version: '3'
+services:
+  bd:
+      image: mysql:latest
+      ports:
+        - "3306:3306"
+      environment:
+        MYSQL_ROOT_PASSWORD: ajudazupper
+        MYSQL_DATABASE: conta-digital
+        MYSQL_PASSWORD: ajudazupper
+     restart: on-failure
