@@ -8,4 +8,6 @@ services:
         MYSQL_ROOT_PASSWORD: ajudazupper
         MYSQL_DATABASE: conta-digital
         MYSQL_PASSWORD: ajudazupper
-     restart: on-failure
+      volumes:
+        - "db-data:/var/lib/mysql"
+      restart: on-failure
