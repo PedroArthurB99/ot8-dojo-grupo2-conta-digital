@@ -1,7 +1,0 @@
-spring:
-  datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/conta-digital
-    username: ajudazupper
-    password: ajudazupper
-    testWhileIdle: true
-    validationQuery: SELECT 1

@@ -3,11 +3,15 @@ services:
   bd:
       image: mysql:latest
       ports:
-        - "3306:3306"
+        - "3307:3306"
       environment:
         MYSQL_ROOT_PASSWORD: ajudazupper
-        MYSQL_DATABASE: conta-digital
+        MYSQL_DATABASE: contasdigitais
         MYSQL_PASSWORD: ajudazupper
+        MYSQL_USER: root
       volumes:
         - "db-data:/var/lib/mysql"
       restart: on-failure
+
+volumes:
+  db-data:
