@@ -25,7 +25,7 @@ public class APIExceptionHandler {
         return dto;
     }
 
-    @ResponseStatus(code= HttpStatus.UNPROCESSABLE_ENTITY)
+    @ResponseStatus(code= HttpStatus.BAD_REQUEST)
     @ExceptionHandler({RegraNegocioException.class})
     public ObjetoErroDTO handleErroRegraNegocio(RegraNegocioException exception) {
         return exception.getObjetoErroDTO();

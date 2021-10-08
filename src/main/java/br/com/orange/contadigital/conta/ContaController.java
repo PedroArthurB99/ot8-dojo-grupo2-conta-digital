@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("contas")
@@ -18,19 +19,22 @@ public class ContaController {
     @PostMapping
     @RequestMapping("/{id}/credito")
     @Transactional
-    public void deposito(@PathVariable("id") Long id, @RequestBody OperacaoForm form) {
+    public String deposito(@PathVariable("id") Long id, @RequestBody @Valid OperacaoForm form) {
         ContaDigital conta = this.contaRepository.findById(id).orElseThrow(() -> new RegraNegocioException(new ObjetoErroDTO("id",
                 "Não existe uma conta com esse id.")));
         conta.deposito(form.getValor());
-
+        contaRepository.save(conta);
+        return "Seu saldo atualizado é " + conta.getSaldo();
     }
 
     @PostMapping
     @RequestMapping("/{id}/debito")
     @Transactional
-    public void saque(@PathVariable("id") Long id, @RequestBody OperacaoForm form) {
+    public String saque(@PathVariable("id") Long id, @RequestBody @Valid OperacaoForm form) {
         ContaDigital conta = this.contaRepository.findById(id).orElseThrow(() -> new RegraNegocioException(new ObjetoErroDTO("id",
                 "Não existe uma conta com esse id.")));
         conta.saque(form.getValor());
+        contaRepository.save(conta);
+        return "Seu saldo atualizado é " + conta.getSaldo();
     }
 }

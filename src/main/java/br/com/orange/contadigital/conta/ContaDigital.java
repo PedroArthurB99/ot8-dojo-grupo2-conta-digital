@@ -17,7 +17,7 @@ public class ContaDigital {
 
     private String numero;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Cliente cliente;
 
     @PositiveOrZero
@@ -31,6 +31,14 @@ public class ContaDigital {
         this.numero = numero;
         this.cliente = cliente;
         this.saldo = saldo;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public BigDecimal getSaldo() {
+        return saldo;
     }
 
     public void deposito(BigDecimal valor) {
