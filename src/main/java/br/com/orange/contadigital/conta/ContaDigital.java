@@ -3,6 +3,8 @@ package br.com.orange.contadigital.conta;
 import br.com.orange.contadigital.conta.cliente.Cliente;
 import br.com.orange.contadigital.exception.ObjetoErroDTO;
 import br.com.orange.contadigital.exception.RegraNegocioException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import javax.validation.constraints.PositiveOrZero;
