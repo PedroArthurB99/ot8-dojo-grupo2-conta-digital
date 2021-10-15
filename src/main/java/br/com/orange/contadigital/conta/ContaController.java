@@ -19,8 +19,7 @@ public class ContaController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @PostMapping
-    @RequestMapping("/{id}/credito")
+    @PostMapping("/{id}/credito")
     @Transactional
     public String deposito(@PathVariable("id") Long id, @RequestBody @Valid OperacaoForm form) {
         ContaDigital conta = this.contaRepository.findById(id).orElseThrow(() -> new RegraNegocioException(new ObjetoErroDTO("id",
@@ -31,8 +30,7 @@ public class ContaController {
         return "Seu saldo atualizado é " + conta.getSaldo();
     }
 
-    @PostMapping
-    @RequestMapping("/{id}/debito")
+    @PostMapping("/{id}/debito")
     @Transactional
     public String saque(@PathVariable("id") Long id, @RequestBody @Valid OperacaoForm form) {
         ContaDigital conta = this.contaRepository.findById(id).orElseThrow(() -> new RegraNegocioException(new ObjetoErroDTO("id",

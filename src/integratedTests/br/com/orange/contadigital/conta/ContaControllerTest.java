@@ -46,8 +46,7 @@ class ContaControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/contas/" + this.id + "/debito")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(gson.toJson(operacao)))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string("Seu saldo atualizado é 90"));
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
