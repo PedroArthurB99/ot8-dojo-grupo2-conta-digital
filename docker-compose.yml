@@ -7,8 +7,8 @@ services:
       environment:
         MYSQL_ROOT_PASSWORD: ajudazupper
         MYSQL_DATABASE: contasdigitais
-        MYSQL_PASSWORD: ajudazupper
-        MYSQL_USER: root
+#        MYSQL_PASSWORD: ajudazupper
+#        MYSQL_USER: root
       volumes:
         - "db-data:/var/lib/mysql"
       restart: on-failure
