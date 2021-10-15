@@ -44,13 +44,13 @@ public class ContaDigital {
     }
 
     public void deposito(BigDecimal valor) {
-        this.saldo.add(valor);
+        this.saldo = this.saldo.add(valor);
     }
 
     public void saque(BigDecimal valor) {
         if (this.saldo.compareTo(valor) == -1){
             throw new RegraNegocioException(new ObjetoErroDTO("valor", "Saldo insuficiente."));
         }
-        this.saldo.subtract(valor);
+         this.saldo = this.saldo.subtract(valor);
     }
 }
