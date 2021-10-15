@@ -1,6 +1,7 @@
 package br.com.orange.contadigital.conta;
 
 import br.com.orange.contadigital.exception.ObjetoErroDTO;
+import br.com.orange.contadigital.exception.RecursoNaoEncontradoException;
 import br.com.orange.contadigital.exception.RegraNegocioException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +23,7 @@ public class ContaController {
     @PostMapping("/{id}/credito")
     @Transactional
     public String deposito(@PathVariable("id") Long id, @RequestBody @Valid OperacaoForm form) {
-        ContaDigital conta = this.contaRepository.findById(id).orElseThrow(() -> new RegraNegocioException(new ObjetoErroDTO("id",
+        ContaDigital conta = this.contaRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException(new ObjetoErroDTO("id",
                 "Não existe uma conta com esse id.")));
         conta.deposito(form.getValor());
         contaRepository.save(conta);
@@ -33,7 +34,7 @@ public class ContaController {
     @PostMapping("/{id}/debito")
     @Transactional
     public String saque(@PathVariable("id") Long id, @RequestBody @Valid OperacaoForm form) {
-        ContaDigital conta = this.contaRepository.findById(id).orElseThrow(() -> new RegraNegocioException(new ObjetoErroDTO("id",
+        ContaDigital conta = this.contaRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException(new ObjetoErroDTO("id",
                 "Não existe uma conta com esse id.")));
         conta.saque(form.getValor());
         contaRepository.save(conta);

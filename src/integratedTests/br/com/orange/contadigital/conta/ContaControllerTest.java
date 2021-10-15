@@ -103,4 +103,26 @@ class ContaControllerTest {
                         .content(gson.toJson(operacao)))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
+
+    @Test
+    @DisplayName("Falha ao tentar creditar em conta inexistente")
+    public void falhaCreditarContaInexistente() throws Exception {
+        OperacaoForm operacao = new OperacaoForm(new BigDecimal(15));
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/contas/" + 99 + "/debito")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(gson.toJson(operacao)))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    @DisplayName("Falha ao tentar debitar de uma conta inexistente")
+    public void falhaDebitarContaInexistente() throws Exception {
+        OperacaoForm operacao = new OperacaoForm(new BigDecimal(15));
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/contas/" + 99 + "/credito")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(gson.toJson(operacao)))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
 }

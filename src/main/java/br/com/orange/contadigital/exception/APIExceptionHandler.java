@@ -1,5 +1,7 @@
 package br.com.orange.contadigital.exception;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -13,6 +15,8 @@ import java.util.List;
 @RestControllerAdvice
 public class APIExceptionHandler {
 
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler({MethodArgumentNotValidException.class})
     public List<ObjetoErroDTO> handleMethodNotValid(MethodArgumentNotValidException exception) {
@@ -25,9 +29,22 @@ public class APIExceptionHandler {
         return dto;
     }
 
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
+    @ExceptionHandler({RecursoNaoEncontradoException.class})
+    public ObjetoErroDTO handleRecursoNaoEncontrado(RecursoNaoEncontradoException exception) {
+        return exception.getObjetoErroDTO();
+    }
+
     @ResponseStatus(code= HttpStatus.BAD_REQUEST)
     @ExceptionHandler({RegraNegocioException.class})
     public ObjetoErroDTO handleErroRegraNegocio(RegraNegocioException exception) {
         return exception.getObjetoErroDTO();
+    }
+
+    @ResponseStatus(code= HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler({Exception.class})
+    public String handleErroRegraNegocio(Exception exception) {
+        logger.warn(String.valueOf(exception.getStackTrace()));
+        return "Tivemos um erro, tente novamente mais tarde.";
     }
 }
